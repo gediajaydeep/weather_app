@@ -11,10 +11,12 @@ class WeatherRepository {
   WeatherRepository(this.client, this.url, this.apiKey);
 
   Future<WeatherData> getWeatherData(double lat, double lng) async {
-   var response = await client.get(
-      Uri.https(
-          url, 'data/2.5/weather',  {'lat': lat.toString(), 'lon': lng.toString(), 'appid': apiKey}),
-    );
+    var response = await client
+        .get(
+          Uri.https(url, 'data/2.5/weather',
+              {'lat': lat.toString(), 'lon': lng.toString(), 'appid': apiKey}),
+        )
+        .timeout(const Duration(seconds: 60));
     if (response.statusCode == 200) {
       WeatherData data = WeatherData.fromJson(jsonDecode(response.body));
       return data;

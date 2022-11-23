@@ -4,9 +4,12 @@ class CitySelectionController extends ChangeNotifier {
   late List<City>? _availableCities;
   City? selectedCity;
 
-  set availableCities(City city) {
-    _availableCities = [city, ..._generateDefaultList()];
-
+  set availableCities(City? city) {
+    _availableCities = [];
+    if (city != null) {
+      _availableCities!.add(city);
+    }
+    _availableCities!.addAll(_generateDefaultList());
   }
 
   List<City> get availableCity => _availableCities ?? [];

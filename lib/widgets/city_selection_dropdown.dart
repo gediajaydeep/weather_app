@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_weather_demo/models/city_selection.dart';
+import 'package:open_weather_demo/controllers/city_selection.dart';
 import 'package:provider/provider.dart';
 
 class CitySelectionDropDown extends StatelessWidget {

@@ -3,10 +3,11 @@ import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'package:open_weather_demo/configs/api_configs.dart';
 import 'package:open_weather_demo/controllers/splash_screen_controller.dart';
-import 'package:open_weather_demo/models/city_selection.dart';
+import 'package:open_weather_demo/controllers/city_selection.dart';
 import 'package:open_weather_demo/controllers/weather_data_controller.dart';
 import 'package:open_weather_demo/repositories/weather_repository.dart';
 import 'package:open_weather_demo/screeens/splash_screen.dart';
+import 'package:open_weather_demo/theme/theme_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -41,10 +42,8 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        title: 'Weather Demo',
+        theme: AppTheme.getThemeData(context),
         home: ChangeNotifierProvider(
             create: (context) => UserLocationController(_getLocation()),
             child: const SplashScreen()),

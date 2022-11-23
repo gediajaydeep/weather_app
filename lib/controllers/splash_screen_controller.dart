@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:location/location.dart';
 
@@ -12,7 +13,9 @@ class UserLocationController extends ChangeNotifier {
   UserLocationController(this.location);
 
   getLocation() async {
-    if (!await location.serviceEnabled()) {
+    try {
+      await _checkLocationServiceEnabled(location);
+    } catch (err) {
       setError('Service is not available');
       return;
     }
@@ -53,5 +56,20 @@ class UserLocationController extends ChangeNotifier {
     lat = locationData.latitude;
     lng = locationData.longitude;
     notifyListeners();
+  }
+
+  Future<void> _checkLocationServiceEnabled(Location location,
+      {int limit = 10}) async {
+    try {
+      bool serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) throw Exception('Service Is NOt Enabled');
+    } on PlatformException {
+      await Future.delayed(const Duration(milliseconds: 100));
+      if (limit > 0) {
+        await _checkLocationServiceEnabled(location, limit: --limit);
+      } else {
+        throw Exception('Service Is NOt Enabled');
+      }
+    }
   }
 }
